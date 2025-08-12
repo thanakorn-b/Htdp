@@ -1,0 +1,19 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname exe-70) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+(define-struct centry [name home office cell])
+(define-struct phone [area number])
+
+(phone-area
+ (centry-office
+  (make-centry "Shriram Fisler"
+               (make-phone 207 "363-2421")
+               (make-phone 101 "776-1099")
+               (make-phone 208 "112-9981"))))
+
+; DrRacket uses the law for centry-office
+;(phone-area
+; (make-phone 101 "776-1099"))
+
+; DrRacket uses the law for phone-area
+; 101

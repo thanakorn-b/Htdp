@@ -1,0 +1,19 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname exe-78) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+; letter is a string with single length and #false
+; which is:
+; "a"
+; "b"
+; ...
+; "z"
+; #false
+
+; a 3letter is a structure
+; (make-3letter letter letter letter)
+; interpretation (make-3letter f s t)
+; which is:
+; f is first letter
+; s is second
+; t is third
+(define-struct 3letter [f s t])

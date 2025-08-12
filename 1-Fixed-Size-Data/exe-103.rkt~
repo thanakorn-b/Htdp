@@ -1,0 +1,34 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname exe-103) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+(define-struct sigs [ufo tank missile])
+; A SIGS.v2 (short for SIGS version 2) is a structure:
+; (make-sigs UFOTankMissileOrNot)
+; interpretation represents the complete state of a
+; space invader game
+  
+; A MissileOrNot is one of:
+; -- #false
+; -- Posn
+; interpretation#false means the missile is in the tank;
+; Posn says the missile is at that location
+
+(define-struct animal [remain-leg space length girth])
+; A animal is a structure:
+; (make-animal parameter parameter parameter parameter)
+; interpretation (make-animal rl s l g)
+; which rl is remain-leg
+; s is space of cage is enough
+; l is length
+; g is girth
+
+(define (consume a)
+  (... (animal-remain-leg a) ...
+       ... (animal-space a) ...
+       ... (animal-length a) ...
+       ... (animal-girth a) ...))
+
+(define (fits a)
+  (if (boolean? (animal-space a))
+      (...)
+      (...)))

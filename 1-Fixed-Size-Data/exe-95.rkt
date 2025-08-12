@@ -1,0 +1,65 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname exe-95) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+(require 2htdp/universe)
+
+; A UFO is a Posn.
+; interpretation (make-posn x y) is the UFO's location
+; (using the top-down, left-to-right convention)
+
+(define-struct tank [loc vel])
+; A Tank is a structure:
+; (make-tank Number Number).
+; interpretation (make-tank x dx) specifies the position:
+; (x, HEIGHT) and the tank's speed: dx pixels/tick
+
+; A Missile is a Posn.
+; interpretation (make-posn x y) is the missile's place
+
+(define HEIGHT 200)
+(define CANVAS (empty-scene HEIGHT HEIGHT))
+
+(define UFO-HEIGHT 10)
+(define UFO-WIDTH (* 2 UFO-HEIGHT))
+(define UFO-IMAGE (overlay
+                   (circle (/ UFO-HEIGHT 2) "solid" "palegreen")
+                   (ellipse UFO-WIDTH (/ UFO-HEIGHT 2) "solid" "green")))
+(define UFO-SPEED 2)
+(define UFO-JUMP-MAX 10)
+
+(define TANK-HEIGHT 8)
+(define TANK-WIDTH (* 2 TANK-HEIGHT))
+(define TANK-Y (- HEIGHT (/ TANK-HEIGHT 2)))
+(define TANK-IMAGE (rectangle TANK-WIDTH TANK-HEIGHT "solid" "midnightblue"))
+(define TANK-SPEED 10)
+
+(define MISSILE-IMAGE (triangle 5 "solid" "black"))
+(define MISSILE-SPEED 2)
+
+
+; A SIGS is one of:
+; -- (make-aim UFO Tank)
+; -- (make-fired UFO Tank Missile)
+; interpretation represents the complete state of a
+; space invader game
+; first instance (make-aim UFO Tank) is when before tank is fire missile
+; second instance  (make-fired UFO Tank Missile) is when tank fire and generate missile
+(define-struct aim [ufo tank])
+(define-struct fired [ufo tank missile])
+
+; first instance
+(make-aim (make-posn 20 10) (make-tank 28 -3))
+
+; second instance
+(make-fired (make-posn 20 10)
+            (make-tank 28 -3)
+            (make-posn 28 (- HEIGHT TANK-HEIGHT)))
+
+; third instance
+(make-fired (make-posn 20 100)
+            (make-tank 100 3)
+            (make-posn 22 103))
+
+; Answer: first instance is a stage that world state tank is aim but not fired missile
+; second instance is a stage that ws is fired and missile is just at start point of tank height
+; third instace is a stage that ws is fired and missile is launch out of tank and hit UFO

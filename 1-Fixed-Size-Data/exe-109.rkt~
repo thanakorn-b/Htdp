@@ -1,0 +1,73 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname exe-109) (read-case-sensitive #t) (teachpacks ((lib "image.rkt" "teachpack" "2htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "image.rkt" "teachpack" "2htdp")) #f)))
+(require 2htdp/universe)
+
+; A key event is string one of
+; -- a
+; -- b
+; -- c
+; -- d
+
+(define AA "white")
+(define BB "yellow")
+(define DD "green")
+(define EE "red")
+
+;              "b" or "c"
+;                  --
+;                 |  |
+;         "a"     V  |     "d"
+;  AA -----------> BB ------------> DD
+;     |            |
+;     |            | not "b" or "c" or "d"
+;     |  not "a"   V
+;      ----------> EE
+;
+; a finite state machine is one of
+; -- AA
+; -- BB
+; -- DD
+; -- EE
+; state is on graph
+
+(define WIDTH 100)
+(define HEIGHT 100)
+
+; ws -> image
+; render color
+
+(check-expect (render AA) (rectangle WIDTH HEIGHT "solid" AA))
+(check-expect (render BB) (rectangle WIDTH HEIGHT "solid" BB))
+(check-expect (render DD) (rectangle WIDTH HEIGHT "solid" DD))
+(check-expect (render EE) (rectangle WIDTH HEIGHT "solid" EE))
+
+(define (render ws)
+  (rectangle WIDTH HEIGHT "solid" ws))
+
+; ws e -> ws
+; action to state
+
+(check-expect (action AA "a") BB)
+(check-expect (action AA " ") EE)
+(check-expect (action BB "b") BB)
+(check-expect (action BB "c") BB)
+(check-expect (action BB " ") EE)
+(check-expect (action BB "d") DD)
+
+(define (action ws e)
+  (...))
+
+; ws -> bool
+
+(check-expect (stop? AA) #false)
+(check-expect (stop? BB) #false)
+(check-expect (stop? DD) #true)
+(check-expect (stop? EE) #true)
+
+(define (stop? ws)
+  (cond
+    [(string=? DD ws) #true]
+    [(string=? EE ws) #true]
+    [else #false]))
+  
